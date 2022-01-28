@@ -1,0 +1,7 @@
+{
+	"files.exclude": {
+		"libft.*": true,
+		"*.o": true
+	},
+	"explorer.sortOrder": "type"
+}
