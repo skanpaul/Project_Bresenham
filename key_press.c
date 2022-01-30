@@ -21,14 +21,28 @@ int key_press(int key, void *param)
 	t_point centre = {.x = 200, .y = 200};
 
 	t_point p1 = {.x = centre.x + 100, .y = centre.y + 0 };		// 0 degre
+
 	t_point p2 = {.x = centre.x + 100, .y = centre.y + 50 };	// 22.5 degree
 	t_point p3 = {.x = centre.x + 100, .y = centre.y + 100 };	// 45 degree
 	t_point p4 = {.x = centre.x + 50,  .y = centre.y + 100 };	// 77.5 degree
+
 	t_point p5 = {.x = centre.x + 0,   .y = centre.y + 100 };	// 90 degree
+
 	t_point p6 = {.x = centre.x - 50,  .y = centre.y + 100 };	// 112.5 degree
 	t_point p7 = {.x = centre.x - 100, .y = centre.y + 100 };	// 135 degree
 	t_point p8 = {.x = centre.x - 100,  .y = centre.y + 50 };	// 157.5 degree
+
 	t_point p9 = {.x = centre.x - 100,  .y = centre.y + 0  };	// 180 degree
+
+	t_point p10 = {.x = centre.x -100, .y = centre.y -50 };		
+	t_point p11 = {.x = centre.x -100, .y = centre.y -100 };		
+	t_point p12 = {.x = centre.x -50, .y = centre.y  -100};	
+
+	t_point p13 = {.x = centre.x + 0, .y = centre.y  -100};
+
+	t_point p14 = {.x = centre.x + 50, .y = centre.y  -100};	
+	t_point p15 = {.x = centre.x + 100, .y = centre.y  -100};		
+	t_point p16 = {.x = centre.x + 100, .y = centre.y -50 };
 
 	data = (t_data *)param;
 
@@ -41,12 +55,20 @@ int key_press(int key, void *param)
 		else if (count == 4)	p_temp = p4;
 		else if (count == 5)	p_temp = p5;
 		else if (count == 6)	p_temp = p6;
-		else if (count == 7) 	
-			p_temp = p7;
+		else if (count == 7) 	p_temp = p7;
 		else if (count == 8)	p_temp = p8;
 		else if (count == 9)	p_temp = p9;
-		else
-			count = 1;
+		else if (count == 10)	p_temp = p10;
+		else if (count == 11)	p_temp = p11;
+		else if (count == 12)	p_temp = p12;
+		else if (count == 13)	p_temp = p13;
+		else if (count == 14)	p_temp = p14;
+		else if (count == 15)	p_temp = p15;
+		else if (count == 16)
+		{
+			p_temp = p16;
+			count = 0;
+		}
 
 		bresenham(centre, p_temp, data, COLOR_RED);
 		count++;
