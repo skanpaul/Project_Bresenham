@@ -48,7 +48,7 @@ int key_press(int key, void *param)
 		else
 			count = 1;
 
-		b_line_03(centre, p_temp, data, COLOR_RED);
+		bresenham(centre, p_temp, data, COLOR_RED);
 		count++;
 	}
 	/* ----------------------------------------------------- */

@@ -12,175 +12,43 @@
 #include "main.h"
 
 /* ************************************************************************** */
-static int h_line(t_point start, t_point end, t_data *data, int color);
-static int v_line(t_point start, t_point end, t_data *data, int color);
-static int b_line_fct_x(t_point start, t_point end, t_data *data, int color);
-static int b_line_fct_y(t_point start, t_point end, t_data *data, int color);
-
-/* ************************************************************************** */
-int b_line_03(t_point start, t_point end, t_data *data, int color)
+int bresenham(t_point start, t_point end, t_data *data, int color)
 {
 	int diff_x;
 	int diff_y;
+	int step_x;
+	int step_y;
+	int err;
+	int e2;
 
 	diff_x = abs(end.x - start.x);
-	diff_y = abs(end.y - start.y);
-	/* -------------------------------------------- */
-	if (diff_y == 0)
+	step_x = start.x < end.x ? 1 : -1;
+	diff_y = -abs(end.y - start.y);
+	step_y = start.y < end.y ? 1 : -1;
+	err = diff_x + diff_y; /* error value e_xy */
+
+	while (true) /* loop */
 	{
-		printf("m = ZERO\n");
-		h_line(start, end, data, color);
-		return (0);
-	}
-	/* -------------------------------------------- */
-	if (diff_x == 0)
-	{
-		printf("m = INFINI\n");
-		v_line(start, end, data, color);
-		return (0);
-	}
-	/* si M <= 1 ----------------------------------- */
+		mlx_pixel_put(data->mlx_ptr, data->win_ptr, start.x, start.y, color);
 
-	if (diff_y - diff_x <= 0)
-	{
-		printf("m plus PETIT ou EGAL à 1\n");
-		b_line_fct_x(start, end, data, color);
-		return (0);
-	}
-	/* si M > 1-------------------------------------------- */
-	else
-	{
-		printf("m plus GRAND à 1\n");
-		b_line_fct_y(start, end, data, color);
-		return (0);
-	}
-
-	return (0);
-}
-/* ************************************************************************** */
-static int b_line_fct_x(t_point start, t_point end, t_data *data, int color)
-{
-	int x;
-	int y;
-	int decision;
-	int x_inc;
-	int y_inc;
-	int diff_x;
-	int diff_y;
-
-	x = start.x;
-	y = start.y;
-	diff_x = abs(end.x - start.x);
-	diff_y = abs(end.y - start.y);
-
-	x_inc = 1;
-	y_inc = 1;
-
-	if (start.x > end.x)
-		x_inc = -1;
-	if (start.y > end.y)
-		y_inc = -1;
-
-	decision = 2 * diff_y + diff_x;
-
-	while (x <= end.x)
-	{
-		if (is_screen_overflow(x, y))
-			return (0);
-		mlx_pixel_put(data->mlx_ptr, data->win_ptr, x, y, color);
-
-		x += x_inc;
-		/* -------------------------------------------- */
-		if (decision < 0)
-			decision = decision + 2 * diff_y;
-		/* -------------------------------------------- */
-		else
+		if (start.x == end.x && start.y == end.y)
+			break;
+		e2 = 2 * err;
+		if (e2 >= diff_y) /* e_xy+e_x > 0 */
 		{
-			decision = decision + 2 * diff_y - 2 * diff_x;
-			y += y_inc;
+			if (start.x == end.x)
+				break;
+			err += diff_y;
+			start.x += step_x;
 		}
-		/* -------------------------------------------- */
-	}
-	return (0);
-}
 
-/* ************************************************************************** */
-static int b_line_fct_y(t_point start, t_point end, t_data *data, int color)
-{
-	int x;
-	int y;
-	int decision;
-	int x_inc;
-	int y_inc;
-	int diff_x;
-	int diff_y;
-
-	x = start.x;
-	y = start.y;
-	diff_x = abs(end.x - start.x);
-	diff_y = abs(end.y - start.y);
-
-	x_inc = 1;
-	y_inc = 1;
-	if (start.x > end.x)
-		x_inc = -1;
-	if (start.y > end.y)
-		y_inc = -1;
-
-	decision = 2 * diff_x + diff_y;
-	while (y <= end.y)
-	{
-		if (is_screen_overflow(x, y))
-			return (0);
-		mlx_pixel_put(data->mlx_ptr, data->win_ptr, x, y, color);
-
-		y += y_inc;
-		/* -------------------------------------------- */
-		if (decision < 0)
-			decision = decision + 2 * diff_x;
-		/* -------------------------------------------- */
-		else
+		if (e2 <= diff_x) /* e_xy+e_y < 0 */
 		{
-			decision = decision + 2 * diff_x - 2 * diff_y;
-			x += x_inc;
+			if (start.y == end.y)
+				break;
+			err += diff_x;
+			start.y += step_y;
 		}
-		/* -------------------------------------------- */
-	}
-	return (0);
-}
-
-/* ************************************************************************** */
-static int h_line(t_point start, t_point end, t_data *data, int color)
-{
-	int x;
-	int y;
-
-	x = start.x;
-	y = start.y;
-	mlx_pixel_put(data->mlx_ptr, data->win_ptr, x, y, color);
-
-	while (x <= end.x)
-	{
-		mlx_pixel_put(data->mlx_ptr, data->win_ptr, x, y, color);
-		x++;
-	}
-	return (0);
-}
-
-/* ************************************************************************** */
-static int v_line(t_point start, t_point end, t_data *data, int color)
-{
-	int x;
-	int y;
-
-	x = start.x;
-	y = start.y;
-	mlx_pixel_put(data->mlx_ptr, data->win_ptr, x, y, color);
-
-	while (y <= end.y)
-	{
-		mlx_pixel_put(data->mlx_ptr, data->win_ptr, x, y, color);
-		y++;
 	}
 	return (0);
 }
