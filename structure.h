@@ -31,16 +31,6 @@ typedef struct s_point
 	int y;
 	int z;
 } t_point;
-/* -------------------------------------------------------------------------- */
-typedef struct s_plot_line
-{
-	int dx;
-	int sx;
-	int dy;
-	int sy;
-	int err;
-	int e2;
-} t_plot_line;
 
 /* -------------------------------------------------------------------------- */
 typedef struct s_vector
