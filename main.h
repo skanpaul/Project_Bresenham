@@ -34,8 +34,6 @@ void draw_grid(int size, t_data *data, int color);
 int key_press(int key, void *param);
 
 int bidon(t_point start, t_point end, t_data *data, int color);
-int b_line_01(t_point start, t_point end, t_data *data, int color);
-int b_line_02(t_point start, t_point end, t_data *data, int color);
 int b_line_03(t_point start, t_point end, t_data *data, int color);
 /* ------------------------------------------------------------------------- */
 bool is_screen_overflow(int x, int y);

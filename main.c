@@ -21,9 +21,7 @@ int main(void)
 		return (MLX_ERROR);
 
 	/* EXPERIMENTATION --------------------------------------------------- */
-	draw_grid(50, &data, COLOR_BLUE);
-
-
+	draw_grid(100, &data, COLOR_BLUE);
 
 	/* GESTION des événements -------------------------------------------- */
 	mlx_hook(data.win_ptr, KeyPress, KeyPressMask, key_press, &data);	
